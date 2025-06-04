@@ -41,9 +41,16 @@ public class UserController {
 
     @RequestMapping("/admin/user/{id}") // Chỗ id đặt j cx đc
     public String getUserDetailPage(Model model, @PathVariable long id) {
-        System.out.println("check path id = " + id);
-        model.addAttribute("users1", id);
+        User user = this.userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("id", id);
         return "admin/user/show";
+    }
+
+    @RequestMapping("/admin/user/update/{id}") // chuyển tham số id
+    public String getUpdateUserPage(Model model) {
+        model.addAttribute("newUser", new User());
+        return "admin/user/update";
     }
 
     @RequestMapping("/admin/user/create") // GET
