@@ -3,6 +3,7 @@ package vn.hoidanit.laptopshop.controller;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("id", id);
         return "admin/user/show";
+
     }
 
     @RequestMapping("/admin/user/update/{id}") // chuyển tham số id
@@ -80,4 +82,18 @@ public class UserController {
         return "redirect:/admin/user"; // xog thì chuyển hướng người dùng về lại
     }
 
+    @GetMapping("/admin/user/delete/{id}")
+    public String getDeleteUserPage(Model model, @PathVariable long id) {
+        model.addAttribute("id", id);
+        // User user = new User();
+        // user.setId(id);
+        model.addAttribute("newUser", new User());
+        return "admin/user/delete";
+    }
+
+    @PostMapping("/admin/user/delete")
+    public String postDeleteUser(Model model, @ModelAttribute("newUser") User eric) {
+        this.userService.deleteUser(eric.getId());
+        return "redirect:/admin/user";
+    }
 }
