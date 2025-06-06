@@ -37,8 +37,9 @@
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <form:input type="email" id="email" class="form-control" path="email" />
-                                    <!-- disabled="true" -disable là ko cho đổi mail-->
+                                    <form:input type="email" id="email" class="form-control" path="email"
+                                        disabled="true" />
+                                    <!--  -disable là ko cho đổi mail-->
                                 </div>
 
 
