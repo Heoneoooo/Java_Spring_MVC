@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.ui.Model;
@@ -48,9 +49,22 @@ public class UserController {
     }
 
     @RequestMapping("/admin/user/update/{id}") // chuyển tham số id
-    public String getUpdateUserPage(Model model) {
-        model.addAttribute("newUser", new User());
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userService.getUserById(id); // in được ra tên ng đung trong update
+        model.addAttribute("newUser", currentUser);
         return "admin/user/update";
+    }
+
+    @PostMapping("/admin/user/update")
+    public String postUpdateUser(Model model, @ModelAttribute("newUser") User hoidanit) {
+        User currentUser = this.userService.getUserById(hoidanit.getId());
+        if (currentUser != null) {
+            currentUser.setAddress(hoidanit.getAddress());
+            currentUser.setFullname(hoidanit.getFullname());
+            currentUser.setPhone(hoidanit.getPhone());
+            this.userService.handleSaveUser(hoidanit);
+        }
+        return "redirect:/admin/user";
     }
 
     @RequestMapping("/admin/user/create") // GET
@@ -59,10 +73,11 @@ public class UserController {
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST) // tạo mới người dùng, muốn lấy giá trị//
+                                                                               // người dùng thì xài @ModelAttribute
     public String createUserPage(Model model, @ModelAttribute("newUser") User hoidanit) {
         this.userService.handleSaveUser(hoidanit);
-        return "redirect:/admin/user";
+        return "redirect:/admin/user"; // xog thì chuyển hướng người dùng về lại
     }
 
 }

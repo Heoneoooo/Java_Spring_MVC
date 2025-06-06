@@ -29,15 +29,18 @@
                             <hr />
                             <form:form method="post" action="/admin/user/update" modelAttribute="newUser">
 
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <form:input type="email" id="email" class="form-control" path="email" />
+                                <div class="mb-3" style="display: none;"> <!-- không cho người dùng thấy id-->
+                                    <label for="id" class="form-label">ID</label>
+                                    <form:input type="text" class="form-control" path="id" />
+                                    <!-- tự động gắn giá trị-->
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password:</label>
-                                    <input type="password" id="password" class="form-control" path="password" />
+                                    <label for="email" class="form-label">Email address</label>
+                                    <form:input type="email" id="email" class="form-control" path="email" />
+                                    <!-- disabled="true" -disable là ko cho đổi mail-->
                                 </div>
+
 
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Phone Number:</label>
